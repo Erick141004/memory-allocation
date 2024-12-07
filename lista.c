@@ -3,6 +3,12 @@
 
 LISTA* criar_lista(int valor){
     LISTA *l = (LISTA *)aloca(sizeof(LISTA));
+
+    if(!l){
+        printf("Não foi possivel alocar memoria para uma nova lista, com o valor %d pois a memoria esta cheia\n", valor);
+        return NULL;
+    }
+
     l->valor = valor;
     l->prox = NULL; 
     return l;
@@ -15,6 +21,12 @@ void inserir_no(LISTA *l, int valor){
     }
     else{
         LISTA *novo_no = (LISTA *)aloca(sizeof(LISTA));
+
+        if(!novo_no){
+            printf("Não foi possivel alocar memoria para um novo nó com valor %d, pois a memoria esta cheia\n", valor);
+            return;
+        }
+
         novo_no->valor = valor;
         novo_no->prox = NULL; 
         l->prox = novo_no;
@@ -41,7 +53,7 @@ void remover_no(LISTA **l, int valor){
         l_aux_atual = l_aux_atual->prox;
     }
 
-    printf("Valor não foi encontrado na lista");
+    printf("Valor não foi encontrado na lista e a remoção não foi realizada\n");
     return;
 }
 
@@ -57,8 +69,9 @@ void buscar_no(LISTA *l, int valor){
         l_aux = l_aux->prox;
     }
 
-    if(l_aux->prox == NULL)
+    if(l_aux == NULL)
         printf("Valor não encontrado na lista\n");
+
     return;
 }
 
@@ -78,7 +91,7 @@ void imprimir_lista(LISTA *l){
 void deletar_lista(LISTA *l){
     LISTA *l_aux = l;
 
-    while(l_aux != NULL){
+    while(l != NULL){
         l_aux = l;
         l = l->prox;
         libera(l_aux);
